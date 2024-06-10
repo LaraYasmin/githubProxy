@@ -1,9 +1,12 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import axios from 'axios';
 
+//inicializating express
 const app = express();
 const port = 3000;
 
+//check if user is authenticated
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
@@ -19,6 +22,7 @@ const authenticate = (req: Request, res: Response, next: NextFunction) => {
     next();
 };
 
+//defining the type of the token
 declare global {
     namespace Express {
         interface Request {
@@ -27,6 +31,7 @@ declare global {
     }
 }
 
+//define the api as a const
 const githubApiUrl = 'https://api.github.com';
 
 const getErrorMessage = (error: unknown): string => {
@@ -36,10 +41,12 @@ const getErrorMessage = (error: unknown): string => {
     return String(error);
 };
 
+//defining default route
 app.get('/', (req: Request, res: Response) => {
     res.send('GitHub Proxy API is running');
 });
 
+//getting the users endpoint from the API
 app.get('/api/users', authenticate, async (req: Request, res: Response) => {
     const { since } = req.query;
     try {
@@ -51,12 +58,16 @@ app.get('/api/users', authenticate, async (req: Request, res: Response) => {
                 'X-GitHub-Api-Version': '2022-11-28'
             }
         });
-        res.json({ users: response.data, next_page: response.headers.link });
+
+        const users = response.data.map((user: any) => ({ id: user.id, login: user.login }));
+
+        res.json({ users, next_page: response.headers.link });
     } catch (error) {
         res.status(500).json({ error: getErrorMessage(error) });
     }
 });
 
+//getting the details endpoint from the API
 app.get('/api/users/:username/details', authenticate, async (req: Request, res: Response) => {
     const { username } = req.params;
     try {
@@ -73,6 +84,7 @@ app.get('/api/users/:username/details', authenticate, async (req: Request, res: 
     }
 });
 
+//getting the repos endpoint from the API
 app.get('/api/users/:username/repos', authenticate, async (req: Request, res: Response) => {
     const { username } = req.params;
     try {
@@ -89,6 +101,9 @@ app.get('/api/users/:username/repos', authenticate, async (req: Request, res: Re
     }
 });
 
+//starting the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
+export { app };
