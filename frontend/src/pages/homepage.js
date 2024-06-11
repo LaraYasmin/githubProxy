@@ -19,7 +19,7 @@ const Homepage = () => {
   }
 
   async function handlePageClick(selected) {
-    const token = '';
+    const token = '//add your authenticated token here';
     const users = await getUsers(token);
     setPage((prevPage) => ({
       ...prevPage,
@@ -29,7 +29,7 @@ const Homepage = () => {
   }
 
   useEffect(() => {
-    const token = '';
+    const token = '//add your authenticated token here';
     getValuesUsers(token);
   }, []);
 

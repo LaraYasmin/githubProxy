@@ -1,0 +1,10 @@
+**\*Running the aplication**
+
+- Generate an authenticaded token with Github Apps
+- Update the homepage and details pages (frontend/src/pages) with your token
+- Run the application (cd backend && npm install && npx ts-node index.ts && cd .. cd frontend && npm install && npm start)
+
+**\*Or access the online link below**
+
+- Backend:
+- Frontend:

@@ -10,7 +10,7 @@ const Details = () => {
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {
-    const token = '';
+    const token = '//add your authenticated token here';
     if (username) {
       getUserDetails(token, username).then(data => {
         setUser(data);
@@ -21,7 +21,7 @@ const Details = () => {
   }, [username]);
 
   useEffect(() => {
-    const token = '';
+    const token = '//add your authenticated token here';
     if (username) {
       getUserRepos(token, username).then(data => {
         setRepos(data);
