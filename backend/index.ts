@@ -5,6 +5,8 @@ import axios from 'axios';
 //inicializating express
 const app = express();
 const port = 3000;
+const cors = require('cors');
+app.use(cors());
 
 //check if user is authenticated
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
