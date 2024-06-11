@@ -31,3 +31,19 @@ const getUserDetails = async (token, username) => {
 };
 
 export { getUserDetails };
+
+const getUserRepos = async (token, username) => {
+    try {
+        const response = await api.get(`/api/users/${username}/repos`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user repos', error);
+        throw error;
+    }
+};
+
+export { getUserRepos };

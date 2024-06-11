@@ -19,7 +19,7 @@ const Homepage = () => {
   }
 
   async function handlePageClick(selected) {
-    const token = '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';
+    const token = '';
     const users = await getUsers(token);
     setPage((prevPage) => ({
       ...prevPage,
@@ -29,7 +29,7 @@ const Homepage = () => {
   }
 
   useEffect(() => {
-    const token = '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';
+    const token = '';
     getValuesUsers(token);
   }, []);
 
